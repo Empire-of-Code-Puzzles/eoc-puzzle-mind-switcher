@@ -3,5 +3,5 @@ def mind_switcher(journal):
 
 if __name__ == '__main__':
     #These "asserts" using only for self-checking and not necessary for auto-testing
-    assert mind_switcher(({"scout", "super"}))
+    assert mind_switcher(({"scout", "super"},))
     assert mind_switcher(({'hater', 'scout'}, {'planer', 'hater'}))
