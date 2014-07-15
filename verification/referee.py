@@ -13,11 +13,12 @@ def cover(f, data):
     result = f(fdata)
     if not isinstance(result, (list, tuple)) or not all(isinstance(p, set) for p in result):
         raise TypeError("The result should be a list/tuple of sets.")
-    return [list(p) for p in result]
+    return [list(p) for p in result], str(result)
 """
 
 
-def checker(data, result):
+def checker(data, from_cover):
+    result, str_result = from_cover
     robots = {"nikola": "nikola", "sophia": "sophia"}
     switched = []
     for pair in data:
@@ -27,22 +28,22 @@ def checker(data, result):
 
     for pair in result:
         if len(pair) != 2:
-            return False, (1, "Each pair should contain exactly two names.")
+            return False, (1, "Each pair should contain exactly two names.", str_result)
         r1, r2 = pair
         if not isinstance(r1, str) or not isinstance(r2, str):
-            return False, (2, "Names must be strings.")
+            return False, (2, "Names must be strings.", str_result)
         if r1 not in robots.keys():
-            return False, (3, "I don't know '{}'.".format(r1))
+            return False, (3, "I don't know '{}'.".format(r1), str_result)
         if r2 not in robots.keys():
-            return False, (3, "I don't know '{}'.".format(r2))
+            return False, (3, "I don't know '{}'.".format(r2), str_result)
         if set(pair) in switched:
-            return False, (4, "'{}' and '{}' already were switched.".format(r1, r2))
+            return False, (4, "'{}' and '{}' already were switched.".format(r1, r2), str_result)
         switched.append(set(pair))
         robots[r1], robots[r2] = robots[r2], robots[r1]
     for body, mind in robots.items():
         if body != mind:
-            return False, (10, "'{}' has '{}' mind.".format(body, mind))
-    return True, (100, "Great!")
+            return False, (10, "'{}' has '{}' mind.".format(body, mind), str_result)
+    return True, (100, "Great!", str_result)
 
 
 api.add_listener(

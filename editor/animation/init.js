@@ -70,12 +70,13 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
             }
 
             var rightResult = data.ext["answer"];
-            var userResult = data.out;
+//            var userResult = data.out;
             var result = data.ext["result"];
             var result_addon = data.ext["result_addon"];
             var state = data.ext["state"];
             var result_code = result_addon[0];
             var result_message = result_addon[1];
+            var userResult = result_addon[2];
 
 
             //if you need additional info from tests (if exists)
