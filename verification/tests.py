@@ -12,7 +12,8 @@ TESTS = {
         {
             "input": [["scout", "super"]],
             "answer": [["scout", "super"]],
-            "show": '({"scout", "super"})'
+            "show": '({"scout", "super"})',
+            "state": {'scout': 'super', 'super': 'scout'}
         },
         {
             "input": [['scout', 'hater'], ['planer', 'hater']],
