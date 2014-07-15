@@ -52,7 +52,7 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
             var failError = function (dError) {
                 $content.find('.call').html('Fail: ' + checkioInputStr);
                 $content.find('.output').html(dError.replace(/\n/g, ","));
-
+                $content.find('.answer').remove();
                 $content.find('.output').addClass('error');
                 $content.find('.call').addClass('error');
                 $content.find('.explanation').remove();

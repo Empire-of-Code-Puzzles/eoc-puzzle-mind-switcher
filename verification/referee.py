@@ -25,6 +25,8 @@ def checker(data, result):
         r1, r2 = pair
         robots[r1], robots[r2] = robots.get(r2, r2), robots.get(r1, r1)
 
+    if not isinstance(result, (list, tuple)) or not all(isinstance(p, set) for p in result):
+        return False, (0, "The result should be a list/tuple of sets.")
     for pair in result:
         if len(pair) != 2:
             return False, (1, "Each pair should contain exactly two names.")
