@@ -40,18 +40,21 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
             }
 
             //YOUR FUNCTION NAME
-            var fname = 'checkio';
+            var fname = 'mind_switcher';
 
-            var checkioInput = data.in;
-            var checkioInputStr = fname + '(' + JSON.stringify(checkioInput)  + ')';
+            if (data.ext && data.ext["show"]) {
+                var checkioInputStr = data.ext["show"];
+            }
+            else {
+                checkioInputStr = '({"scout", "super"})';
+            }
 
-            var failError = function(dError) {
+            var failError = function (dError) {
                 $content.find('.call').html('Fail: ' + checkioInputStr);
                 $content.find('.output').html(dError.replace(/\n/g, ","));
 
                 $content.find('.output').addClass('error');
                 $content.find('.call').addClass('error');
-                $content.find('.answer').remove();
                 $content.find('.explanation').remove();
                 this_e.setAnimationHeight($content.height() + 60);
             };
@@ -70,6 +73,9 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
             var userResult = data.out;
             var result = data.ext["result"];
             var result_addon = data.ext["result_addon"];
+            var state = data.ext["state"];
+            var result_code = result_addon[0];
+            var result_message = result_addon[1];
 
 
             //if you need additional info from tests (if exists)
@@ -79,7 +85,7 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
 
             if (!result) {
                 $content.find('.call').html('Fail: ' + checkioInputStr);
-                $content.find('.answer').html('Right result:&nbsp;' + JSON.stringify(rightResult));
+                $content.find('.answer').html(result_message);
                 $content.find('.answer').addClass('error');
                 $content.find('.output').addClass('error');
                 $content.find('.call').addClass('error');
@@ -89,13 +95,11 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
                 $content.find('.answer').remove();
             }
 
-            //Your code here about test explanation animation
-            //$content.find(".explanation").html("Something text for example");
-            //
-            //
-            //
-            //
-            //
+            var canvas = new BodiesMinds();
+            canvas.draw($content.find(".explanation")[0], state);
+            if (result_code > 5) {
+                canvas.animate(userResult);
+            }
 
 
             this_e.setAnimationHeight($content.height() + 60);
@@ -115,27 +119,102 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
 //                this_e.sendToConsoleCheckiO("something");
 //            });
 //        });
+        function BodiesMinds() {
+            var colorOrange4 = "#F0801A";
+            var colorOrange3 = "#FA8F00";
+            var colorOrange2 = "#FAA600";
+            var colorOrange1 = "#FABA00";
 
-        var colorOrange4 = "#F0801A";
-        var colorOrange3 = "#FA8F00";
-        var colorOrange2 = "#FAA600";
-        var colorOrange1 = "#FABA00";
+            var colorBlue4 = "#294270";
+            var colorBlue3 = "#006CA9";
+            var colorBlue2 = "#65A1CF";
+            var colorBlue1 = "#8FC7ED";
 
-        var colorBlue4 = "#294270";
-        var colorBlue3 = "#006CA9";
-        var colorBlue2 = "#65A1CF";
-        var colorBlue1 = "#8FC7ED";
+            var colorGrey4 = "#737370";
+            var colorGrey3 = "#9D9E9E";
+            var colorGrey2 = "#C5C6C6";
+            var colorGrey1 = "#EBEDED";
 
-        var colorGrey4 = "#737370";
-        var colorGrey3 = "#9D9E9E";
-        var colorGrey2 = "#C5C6C6";
-        var colorGrey1 = "#EBEDED";
+            var colorWhite = "#FFFFFF";
 
-        var colorWhite = "#FFFFFF";
-        //Your Additional functions or objects inside scope
-        //
-        //
-        //
+            var padding = 10;
+
+            var w = 100;
+            var h = w * 0.6;
+
+            var paper;
+
+            var sizeX = padding * 4 + w * 3;
+            var sizeY;
+            var names = [];
+            var minds = {};
+
+            var attrRect = {"stroke": colorBlue4, "stroke-width": 3};
+            var attrText = {"stroke": colorBlue4, "fill": colorBlue4, "font-family": "Roboto", "font-size": h * 0.4};
+            var attrWrong = {"fill": colorOrange4, "stroke": colorOrange4};
+            var attrRight = {"fill": colorBlue4, "stroke": colorBlue4};
+
+            this.draw = function (dom, state) {
+                state["sophia"] = "sophia";
+                state["nikola"] = "nikola";
+                names = Object.keys(state);
+                var rows = Math.ceil(names.length / 3);
+                sizeY = rows * h + padding * (rows + 1);
+                paper = Raphael(dom, sizeX, sizeY);
+                for (var i = 0; i < names.length; i++) {
+                    var row = Math.floor(i / 3);
+                    var col = i % 3;
+                    var body = names[i];
+                    var mind = state[body];
+
+                    paper.rect(padding * (col + 1) + w * col, padding * (row + 1) + h * row,
+                        w, h, w / 10).attr(attrRect);
+                    paper.rect(padding * (col + 1) + w * col, padding * (row + 1) + h * row,
+                        w, h / 2, w / 10).attr(attrRect);
+                    paper.text(padding * (col + 1) + w * col + w / 2,
+                        padding * (row + 1) + h * row + h * 0.7, body).attr(attrText);
+                    var t = paper.text(0, 0, mind).attr(attrText);
+                    t.x = padding * (col + 1) + w * col + w / 2;
+                    t.y = padding * (row + 1) + h * row + h * 0.2;
+                    t.name = mind;
+                    t.transform("t" + t.x + "," + t.y);
+                    if (body !== mind) {
+                        t.attr(attrWrong);
+                    }
+                    minds[body] = t;
+                }
+            };
+
+            this.animate = function (actions) {
+                var stepTime = 700;
+                var fullStep = stepTime * 1.3;
+                for (var i = 0; i < actions.length; i++) {
+                    setTimeout(function () {
+                        var act = actions[i];
+                        return function () {
+                            var f = act[0];
+                            var s = act[1];
+                            var f_mind = minds[f];
+                            var s_mind = minds[s];
+                            minds[f] = s_mind;
+                            minds[s] = f_mind;
+                            var s_color = f === s_mind.name ? colorBlue4 : colorOrange4;
+                            var f_color = s === f_mind.name ? colorBlue4 : colorOrange4;
+                            f_mind.animate({"transform": "t" + s_mind.x + "," + s_mind.y,
+                                "fill": f_color, "stroke": f_color}, stepTime);
+                            s_mind.animate({"transform": "t" + f_mind.x + "," + f_mind.y,
+                                "fill": s_color, "stroke": s_color}, stepTime, stepTime);
+                            var tx = s_mind.x;
+                            var ty = s_mind.y;
+                            s_mind.x = f_mind.x;
+                            s_mind.y = f_mind.y;
+                            f_mind.x = tx;
+                            f_mind.y = ty;
+                        }
+                    }(), fullStep * i);
+                }
+            }
+        }
 
 
     }

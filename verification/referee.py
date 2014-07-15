@@ -36,12 +36,12 @@ def checker(data, result):
         if r2 not in robots.keys():
             return False, (3, "I don't know '{}'.".format(r2))
         if set(pair) in switched:
-            return False, (4, "{} and {} already were switched.}.".format(r1, r2))
+            return False, (4, "'{}' and '{}' already were switched.".format(r1, r2))
         switched.append(set(pair))
         robots[r1], robots[r2] = robots[r2], robots[r1]
     for body, mind in robots.items():
         if body != mind:
-            return False, (10, "{} has {} mind.}.".format(body, mind))
+            return False, (10, "'{}' has '{}' mind.".format(body, mind))
     return True, (100, "Great!")
 
 
