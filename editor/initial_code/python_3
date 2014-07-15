@@ -43,3 +43,5 @@ if __name__ == '__main__':
 
     assert check_solution(mind_switcher, ({"scout", "super"},))
     assert check_solution(mind_switcher, ({'hater', 'scout'}, {'planer', 'hater'}))
+    assert check_solution(mind_switcher, ({'scout', 'driller'}, {'scout', 'lister'},
+                                          {'hater', 'digger'}, {'planer', 'lister'}, {'super', 'melter'}))

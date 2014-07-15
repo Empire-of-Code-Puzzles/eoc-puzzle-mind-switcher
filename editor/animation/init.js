@@ -43,10 +43,10 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
             var fname = 'mind_switcher';
 
             if (data.ext && data.ext["show"]) {
-                var checkioInputStr = data.ext["show"];
+                var checkioInputStr = fname + "(" + data.ext["show"] + ")";
             }
             else {
-                checkioInputStr = '({"scout", "super"})';
+                checkioInputStr = fname + '({"scout", "super"},)';
             }
 
             var failError = function (dError) {
