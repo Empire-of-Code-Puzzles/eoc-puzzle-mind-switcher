@@ -70,19 +70,19 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
             }
 
             var rightResult = data.ext["answer"];
-//            var userResult = data.out;
+            var userResult = data.out;
             var result = data.ext["result"];
             var result_addon = data.ext["result_addon"];
             var state = data.ext["state"];
             var result_code = result_addon[0];
             var result_message = result_addon[1];
-            var userResult = result_addon[2];
+            var userResultShow = result_addon[2];
 
 
             //if you need additional info from tests (if exists)
             var explanation = data.ext["explanation"];
 
-            $content.find('.output').html('&nbsp;Your result:&nbsp;' + JSON.stringify(userResult));
+            $content.find('.output').html('&nbsp;Your result:&nbsp;' + JSON.stringify(userResultShow));
 
             if (!result) {
                 $content.find('.call').html('Fail: ' + checkioInputStr);
@@ -99,7 +99,7 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
             var canvas = new BodiesMinds();
             canvas.draw($content.find(".explanation")[0], state);
             if (result_code > 5) {
-                canvas.animate(userResult);
+                canvas.animate(userResult[0]);
             }
 
 
