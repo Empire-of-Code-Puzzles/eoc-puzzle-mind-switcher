@@ -46,7 +46,7 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
                 var checkioInputStr = fname + "(" + data.ext["show"] + ")";
             }
             else {
-                checkioInputStr = fname + '({"scout", "super"},)';
+                checkioInputStr = fname + '(({"scout", "super"},))';
             }
 
             var failError = function (dError) {
