@@ -1,0 +1,87 @@
+<div class="story">
+    <img src="{{MEDIA}}Prisoner_of_Benda_Theorem_on_Chalkboard.png"
+         style="float: left; margin: 0 10px 0 10px;"
+         width="300px"/>
+
+    <div style="padding: 10px">
+        <p>
+            - Oh no! Is it possible to get everyone back to normal using four or more bodies?
+        </p>
+
+        <p>
+            - I'm not sure. I'm afraid we need to use... <strong><a
+                href="http://en.wikipedia.org/wiki/The_Prisoner_of_Benda#The_theorem">MATH</a></strong>.
+        </p>
+
+        <p style="float: right; font-style: normal; font-size: 12px">"Futurama" - Season 6 Episode 10 - "The Prisoner of
+            Benda"</p>
+    </div>
+    <div style="clear: both"></div>
+
+</div>
+
+<p>
+    Дроны Софии, эти простые роботы ежедневно делают опасную работу
+    Но на случай поломки у Софии есть машина для снятия запасных копий.
+    Эта машина может копировать разум робота, но у нее есть другая недокументированая функция.
+    Данный агрегат может работать, как машина для обмена разумами.
+</p>
+<p>
+    Однажды София забыла выключить копировальную машину и оставила дронов в той же комнате.
+    Когда она вернулась, некоторые из них уже обменялись сознаниями друг с другом.
+    Наша задача вернуть все как было, иначе гарантия будет недействительна.
+</p>
+
+<p>
+    У нас есть журнал событий о том какие дроны обменялись телами.
+    Но есть одна проблема - если пара дронов обменялась разумами, то обратно этим же телам не поменяться.
+    Однако, у нас есть два дополнительных тела, чтобы упорядочить этот хаос.
+    Никола и София выступили добровольцами, чтобы помочь ("nikola" и "sophia").
+</p>
+<p>
+    Вам дан массив с информацией о прошлых обменах разумами.
+    Каждая запись - это набор двух имен роботов (тел).
+    Вы можете работать с телами, которые указаны в журнале и плюс два дополнительных тела  - "nikola" и
+    "sophia".
+    Найдите последовательность обменов разумами, так чтобы вернуть всех в их тела.
+    Результат должен быть в виде массива (list/tuple) наборов (set) с двумя именами роботов (тела) в каждом.
+</p>
+
+<p>
+    <strong>Входные данные: </strong> Журнал, как кортеж (tuple) наборов (set).
+    Каждый набор содержит две строки (str, unicode).
+</p>
+
+<p>
+    <strong>Выходные данные: </strong>
+    Последовательность действий, как массив (list/tuple) наборов (set). Каждый набор содержит две строки (str, unicode).
+</p>
+
+
+<div class="for_info_only">
+    <p>
+        <strong>Примеры:</strong>
+    </p>
+    <pre class="brush: python">
+mind_switcher(({"scout", "super"},)) == ({"super", "nikola"}, {"sophia", "scout"},
+                                         {"nikola", "scout"}, {"sophia", "super"},
+                                         {"nikola", "sophia"})
+
+    </pre>
+</div>
+
+<p class="for_info_only">
+    <strong>Зачем это нужно: </strong>
+    теорема из данной задачи (точнее эпизода Футурамы) основана на теории груп.
+    Данная теория имеет широкое применение в криптографии, физики и химии.
+</p>
+
+<p>
+    <strong>Предусловия:</strong><br>
+    0 &lt; len(journal) &le; 55<br>
+    <strong>journal</strong> правилен.
+</p>
+<p>
+    <strong>Источники:</strong>
+    Cohen, David (2010). Futurama volume 5 DVD episode 10 "The Prisoner of Benda" (DVD). 20th Century Fox.
+</p>
