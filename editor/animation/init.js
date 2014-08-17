@@ -42,12 +42,15 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
             //YOUR FUNCTION NAME
             var fname = 'mind_switcher';
 
-            if (data.ext && data.ext["show"]) {
-                var checkioInputStr = fname + "(" + data.ext["show"] + ")";
+            var checkioInput = data.in || [["scout", "super"]];
+
+            var checkioInputStr = fname + "({";
+            for (var f = 0; f < checkioInput.length; f++) {
+                checkioInputStr += checkioInput[f][0] + ": " + checkioInput[f][1] + ",";
             }
-            else {
-                checkioInputStr = fname + '(({"scout", "super"},))';
-            }
+            checkioInputStr += "})";
+
+
 
             var failError = function (dError) {
                 $content.find('.call').html('Fail: ' + checkioInputStr);
