@@ -44,11 +44,11 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
 
             var checkioInput = data.in || [["scout", "super"]];
 
-            var checkioInputStr = fname + "({";
+            var checkioInputStr = fname + "([";
             for (var f = 0; f < checkioInput.length; f++) {
-                checkioInputStr += checkioInput[f][0] + ": " + checkioInput[f][1] + ",";
+                checkioInputStr += "{" + checkioInput[f][0] + ", " + checkioInput[f][1] + "}, ";
             }
-            checkioInputStr += "})";
+            checkioInputStr += "])";
 
 
 
