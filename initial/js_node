@@ -1,0 +1,78 @@
+"use strict";
+
+function mindSwitcher(journal) {
+    return [];
+}
+
+if (!global.is_checking) {
+    // These "asserts" using only for self-checking and not necessary for auto-testing
+    var assert = require("assert");
+    
+    var checkSolution = function(func, data) {
+        var robots = {"a1": "a1", "t2": "t2"},
+            switched = [];
+        for (var i = 0, l = data.length; i < l; i++){
+            var pair = data[i];
+            var r1 = pair[0],
+                r2 = pair[1];
+            switched.push(String([r1, r2]));
+            switched.push(String([r2, r1]));
+            robots[r1] = robots.get(r2, r2);
+            robots[r2] = robots.get(r1, r1);
+        }
+        var result = func(data);
+        if (!Array.isArray(result)) {
+            console.log("The result should be an array of arrays.");
+            return false;
+        }
+        for (i = 0, l = result.length; i < l; i++) {
+            pair = result[i];
+            if (pair.length !== 2) {
+                console.log(1, "Each pair should contain exactly two names.");
+                return false;
+            }
+            r1 = pair[0];
+            r2 = pair[1];
+            if (typeof(r1) !== 'string' || typeof(r2) !== 'string') {
+                console.log("Names must be strings.");
+                return false;
+            }
+            if (robots[r1] === undefined) {
+                console.log("I don't know '" + r1 + "'");
+                return false;
+            }
+            if (robots[r2] === undefined) {
+                console.log("I don't know '" + r2 + "'");
+                return false;
+            }
+            if (switched.indexOf(String(pair)) !== -1) {
+                console.log("'" + r1 + "' and '" + r2 + "' already were switched.");
+                return false;
+            }
+            switched.push(String([r1, r2]));
+            switched.push(String([r2, r1]));
+            var temp = robots[r1];
+            robots[r1] = robots[r2];
+            robots[r2] = temp;
+        }
+
+
+        for (var body in robots) {
+            if (!robots.hasOwnProperty(body)) {
+                continue;
+            }
+            if (body !== robots[body]) {
+                console.log("'" + body + "' has '" + robots[body] + "' mind.");
+                return false;
+            }
+        }
+        return true
+    };
+
+    assert(checkSolution(mindSwitcher, [["scout", "super"]]), "1st");
+    assert(checkSolution(mindSwitcher, [['hater', 'scout'], ['planer', 'hater']]), "2nd");
+    assert(checkSolution(mindSwitcher, [['scout', 'driller'], ['scout', 'lister'],
+                                          ['hater', 'digger'], ['planer', 'lister'],
+                                          ['super', 'melter']]), "3rd");
+    console.log("Use 'Check' to earn sweet rewards!")
+}

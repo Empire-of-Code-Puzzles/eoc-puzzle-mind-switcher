@@ -1,4 +1,4 @@
-checkio-mission-mind-switcher
-=============================
+robot-sorting
+=====================
 
-Checkio Mission "Mind Switcher"
+Mine 1.4 "Robot Sorting"
